@@ -52,3 +52,12 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# IDEA
+*.iml
+*.ipr
+*.iws
+out
+.idea
+
+*.class
