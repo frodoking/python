@@ -10,6 +10,8 @@ import re
 import json
 import random
 
+video_url = "http://www.fun.tv/vplay/m-97920"
+
 
 def create_request(url, referer=None):
     req = urllib2.Request(
@@ -73,8 +75,9 @@ if __name__ == '__main__':
     # print 'Please input the url to be parse'
     # sys.exit()
 
-    # videoUrl = sys.argv[1]
-    video_url = "http://www.fun.tv/vplay/m-97920"
+    # video_url = sys.argv[1]
+
+
     vid = int(re.findall("vplay/m-(\d+)", video_url)[0])
     api_url = 'http://api.fun.tv/ajax/get_webplayinfo/{0}/1/mp4?user=funshion'.format(vid)
     cdn_url = get_cdn_url(api_url, video_url)
