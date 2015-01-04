@@ -10,6 +10,7 @@ import re
 import json
 import random
 
+
 def create_request(url, referer=None):
     req = urllib2.Request(
         urllib2.quote(url.split('#')[0].encode('utf8'), safe="%/:=&?~#+!$,;'@()*[]"),
