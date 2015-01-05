@@ -5,7 +5,7 @@ import re
 global num
 num = 0
 i = 0
-save_path = "D:\\work\\tmp\\doubanmeizhi\\"
+save_path = "D:\\work\\tmp\\dbmeizhi\\"
 
 
 def get_url(n):
@@ -20,6 +20,7 @@ for page in range(1, 10):
     girl = get_url(page)
     length = len(girl)
     for i in range(0, length):
+        print(girl[i])
         url2 = urllib.urlopen(girl[i])
         data2 = url2.read()
         f = open(save_path + '%d.jpg' % num, 'wb')
