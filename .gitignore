@@ -59,5 +59,6 @@ target/
 *.iws
 out
 .idea
+.idea/*.xml
 
 *.class
