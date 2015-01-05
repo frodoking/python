@@ -3,7 +3,7 @@ import os
 import urllib
 from HTMLParser import HTMLParser
 import re
-from ThreadPool import ThreadPool
+from threadPool import ThreadPool
 
 host_url = "http://www.dbmeizi.com/"
 root_dir = "D:\\work\\tmp\\dbmeizhi\\"
