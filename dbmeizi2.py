@@ -58,15 +58,20 @@ def get_image_url_list(image_url):
     return image_url_list
 
 
-def down_image(image_url, image_dir):
-    print image_url
-    u = urllib.urlopen(image_url)
-    data = u.read()
-    name = image_url[-13:-3]
-    f = open(image_dir + '\\' + '%s.jpg' % name, 'wb')
-    f.write(data)
-    f.close()
+def down_image(image_url, image_dir, high):
+    if high is True:  # 高清图片
+        image_url = image_url.replace('s_', '')
 
+    print image_url
+    try:
+        u = urllib.urlopen(image_url)
+        data = u.read()
+        name = image_url[-13:-3]
+        f = open(image_dir + '\\' + '%s.jpg' % name, 'wb')
+        f.write(data)
+        f.close()
+    except Exception, e:
+        print e
 
 if __name__ == '__main__':
     tab_list = get_tab_list(host_url)
@@ -79,8 +84,9 @@ if __name__ == '__main__':
         print '开始抓取 >>>> ', tab_path, tab_name, tab_dir
 
         for p in range(10):
-            for url in get_image_url_list(host_url + '?p=%d' % p):
-                down_image(url, tab_dir)
+            image_urls = get_image_url_list(host_url + '?p=%d' % p)
+            for url in set(image_urls):
+                down_image(url, tab_dir, True)
                 # thread_pool.add_job(down_image, url, tab_dir)
 
     # thread_pool.wait_for_complete()

@@ -21,7 +21,7 @@ for page in range(1, 10):
     length = len(girl)
     for i in range(0, length):
         print(girl[i])
-        url2 = urllib.urlopen(girl[i])
+        url2 = urllib.urlopen(girl[i].replace('s_', ''))
         data2 = url2.read()
         f = open(save_path + '%d.jpg' % num, 'wb')
         f.write(data2)
