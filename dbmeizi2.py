@@ -54,18 +54,17 @@ def create_dir(dir, name):
 
 # 获取当前tab中的图片url列表
 def get_image_url_list(image_url):
+    print '当前tab url:', image_url
     u = urllib.urlopen(image_url)
     data = u.read()
-    r = re.compile(r'http://pic.dbmeizi.com/npics/[a-z0-9-]{3}/[a-z0-9-]{3}/s_p[0-9]{8}.jpg')
+    r = re.compile(r'http://pic.dbmeizi.com/npics/[a-z0-9-]{3}/[a-z0-9-]{3}/p[0-9]{8}.jpg')
     image_url_list = r.findall(data)
     return image_url_list
 
 
 # 下载
-def down_image(image_url, image_dir, high):
-    if high is True:  # 高清图片
-        image_url = image_url.replace('s_', '')
-    print image_url, image_dir, high
+def down_image(image_url, image_dir):
+    print image_url, image_dir
     try:
         fd = urllib2.urlopen(image_url)
         data = fd.read()
@@ -84,7 +83,6 @@ def main():
     print '************ 开始 ***********'
     tab_list = get_tab_list(host_url)
     # 使用线程池
-    socket.setdefaulttimeout(10)
     wm = WorkerManager(len(tab_list))
     for tab in tab_list:
         tab_path = tab[0]
@@ -94,13 +92,13 @@ def main():
         print '开始抓取 >>>> ', tab_path, tab_name, tab_dir
 
         for p in range(10):  # 默认10页
-            image_urls = get_image_url_list(host_url + '?p=%d' % p)
+            image_urls = get_image_url_list(host_url + tab_path + '?p=%d' % p)
             count = 0
             for url in set(image_urls):
                 count += 1
                 print '当前状态 >>>> ', tab_name, count, len(image_urls), ' <<<< '
-                down_image(url, tab_dir, True)
-                # wm.add_job(down_image, url, tab_dir, True)
+                down_image(url, tab_dir)
+                # wm.add_job(down_image, url, tab_dir)
     wm.wait_for_complete()
     print '************ 结束 ***********'
 

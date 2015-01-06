@@ -14,18 +14,18 @@ class Worker(Thread):
         self.id = Worker.worker_count
         Worker.worker_count += 1
         self.setDaemon(True)
-        self.workQueue = work_queue
-        self.resultQueue = result_queue
+        self.work_queue = work_queue
+        self.result_queue = result_queue
         self.start()
 
     def run(self):
         """ the get-some-work, do-some-work main loop of worker threads """
         while True:
             try:
-                func, args, kwds = self.workQueue.get(timeout=Worker.timeout)
+                func, args, kwds = self.work_queue.get(timeout=Worker.timeout)
                 res = func(*args, **kwds)
                 print "worker[%2d]: %s" % (self.id, str(res))
-                self.resultQueue.put(res)
+                self.result_queue.put(res)
                 # time.sleep(Worker.sleep)
             except Queue.Empty:
                 break
